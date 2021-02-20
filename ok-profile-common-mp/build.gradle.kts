@@ -2,8 +2,8 @@ plugins {
     kotlin("multiplatform")
 }
 
-group = "profile.pd"
-version = "0.0.1"
+group = rootProject.group
+version = rootProject.version
 
 repositories {
     mavenCentral()
