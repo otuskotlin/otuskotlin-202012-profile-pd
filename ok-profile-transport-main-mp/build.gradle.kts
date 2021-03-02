@@ -1,17 +1,23 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
 }
 
 kotlin {
-    jvm {}
+    jvm {
+        withJava()
+    }
     js {
         browser {}
     }
 
     sourceSets {
+        val serializationVersion: String by project
+
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
             }
         }
         val commonTest by getting {
