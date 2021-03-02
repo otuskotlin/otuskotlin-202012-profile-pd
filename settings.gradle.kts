@@ -11,3 +11,4 @@ pluginManagement {
 
 include("ok-profile-common-mp")
 include("ok-profile-common-be")
+include("ok-profile-transport-main-mp")
