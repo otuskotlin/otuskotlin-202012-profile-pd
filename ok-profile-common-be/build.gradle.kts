@@ -2,13 +2,6 @@ plugins {
     kotlin("jvm")
 }
 
-group = rootProject.group
-version = rootProject.version
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     val kotestVersion: String by project
 
