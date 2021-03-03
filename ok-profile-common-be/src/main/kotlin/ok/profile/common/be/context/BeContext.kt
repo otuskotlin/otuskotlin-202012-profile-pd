@@ -3,7 +3,7 @@ package ok.profile.common.be.context
 import ok.profile.common.be.models.Profile
 import ok.profile.common.be.models.ProfileId
 
-data class Context(
+data class BeContext(
     var requestProfileId: ProfileId = ProfileId.NONE,
     var requestProfile: Profile = Profile.NONE,
 
