@@ -12,5 +12,5 @@ pluginManagement {
 
 include("ok-profile-common-mp")
 include("ok-profile-common-be")
-include("ok-profile-transport-main-mp")
+include("ok-profile-transport-mp")
 include("ok-profile-transport-mappers")
