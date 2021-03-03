@@ -1,8 +1,7 @@
-package ok.profile.transport.main.mp
+package ok.profile.transport.main.mp.request
 
 import kotlinx.serialization.json.Json
 import ok.profile.transport.main.mp.common.MpWorkModeDto
-import ok.profile.transport.main.mp.request.MpReadRequest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

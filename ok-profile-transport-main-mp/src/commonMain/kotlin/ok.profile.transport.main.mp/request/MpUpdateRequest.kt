@@ -12,7 +12,6 @@ data class MpUpdateRequest(
     override val startTime: String? = null,
     override val debug: Debug? = null,
     val createData: MpProfileDto? = null,
-    val profileId: String? = null,
 ) : IMpRequest {
 
     @Serializable

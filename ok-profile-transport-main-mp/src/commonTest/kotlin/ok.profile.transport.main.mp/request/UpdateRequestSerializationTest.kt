@@ -1,18 +1,17 @@
-package ok.profile.transport.main.mp
+package ok.profile.transport.main.mp.request
 
 import kotlinx.serialization.json.Json
 import ok.profile.transport.main.mp.dto.MpProfileDto
-import ok.profile.transport.main.mp.request.MpCreateRequest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class CreateRequestSerializationTest {
+internal class UpdateRequestSerializationTest {
 
-    private val request = MpCreateRequest(
+    private val request = MpUpdateRequest(
         requestId = "id-1",
-        startTime = "2021-02-13T12:00:00",
         createData = MpProfileDto(
+            id = "profile-1",
             firstName = "Pavel",
             lastName = "Durov",
             email = "pavel@telegram.com",
@@ -24,12 +23,10 @@ internal class CreateRequestSerializationTest {
         val json = Json {
             prettyPrint = true
         }
-
-        val requestAsString = json.encodeToString(MpCreateRequest.serializer(), request)
-
+        val requestAsString = json.encodeToString(MpUpdateRequest.serializer(), request)
         assertTrue("id-1" in requestAsString)
-        assertTrue("Pavel" in requestAsString)
-        assertTrue("onResponse" !in requestAsString)
+        assertTrue("profile-1" in requestAsString)
+        assertTrue("Durov" in requestAsString)
     }
 
     @Test
@@ -37,17 +34,16 @@ internal class CreateRequestSerializationTest {
         val json = """
             {
                 "requestId": "id-1",
-                "startTime": "2021-02-13T12:00:00",
                 "createData": {
+                    "id": "profile-1"
                     "firstName": "Pavel",
                     "lastName": "Durov",
                     "email": "pavel@telegram.com"
                 }
-            }
+            }    
         """.trimIndent()
 
-        val reqEntity = Json.decodeFromString(MpCreateRequest.serializer(), json)
-
+        val reqEntity = Json.decodeFromString(MpUpdateRequest.serializer(), json)
         assertEquals(reqEntity, request)
     }
 }

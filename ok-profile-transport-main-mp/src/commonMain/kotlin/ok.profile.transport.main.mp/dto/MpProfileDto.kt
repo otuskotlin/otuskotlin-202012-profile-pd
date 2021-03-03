@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MpProfileDto(
+    val id: String? = null,
     val firstName: String? = null,
     val lastName: String? = null,
     val nickName: String? = null,

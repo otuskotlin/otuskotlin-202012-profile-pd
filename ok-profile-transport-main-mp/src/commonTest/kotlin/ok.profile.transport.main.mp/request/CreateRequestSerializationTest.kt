@@ -1,17 +1,16 @@
-package ok.profile.transport.main.mp
+package ok.profile.transport.main.mp.request
 
 import kotlinx.serialization.json.Json
 import ok.profile.transport.main.mp.dto.MpProfileDto
-import ok.profile.transport.main.mp.request.MpUpdateRequest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class UpdateRequestSerializationTest {
+internal class CreateRequestSerializationTest {
 
-    private val request = MpUpdateRequest(
+    private val request = MpCreateRequest(
         requestId = "id-1",
-        profileId = "profile-1",
+        startTime = "2021-02-13T12:00:00",
         createData = MpProfileDto(
             firstName = "Pavel",
             lastName = "Durov",
@@ -24,10 +23,12 @@ internal class UpdateRequestSerializationTest {
         val json = Json {
             prettyPrint = true
         }
-        val requestAsString = json.encodeToString(MpUpdateRequest.serializer(), request)
+
+        val requestAsString = json.encodeToString(MpCreateRequest.serializer(), request)
+
         assertTrue("id-1" in requestAsString)
-        assertTrue("profile-1" in requestAsString)
-        assertTrue("Durov" in requestAsString)
+        assertTrue("Pavel" in requestAsString)
+        assertTrue("onResponse" !in requestAsString)
     }
 
     @Test
@@ -35,16 +36,17 @@ internal class UpdateRequestSerializationTest {
         val json = """
             {
                 "requestId": "id-1",
+                "startTime": "2021-02-13T12:00:00",
                 "createData": {
                     "firstName": "Pavel",
                     "lastName": "Durov",
                     "email": "pavel@telegram.com"
-                },
-                "profileId": "profile-1"
-            }    
+                }
+            }
         """.trimIndent()
 
-        val reqEntity = Json.decodeFromString(MpUpdateRequest.serializer(), json)
+        val reqEntity = Json.decodeFromString(MpCreateRequest.serializer(), json)
+
         assertEquals(reqEntity, request)
     }
 }
