@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm")
 }
@@ -12,4 +14,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// enable inline classes
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    freeCompilerArgs = listOf("-Xinline-classes")
 }
