@@ -50,7 +50,7 @@ internal class RequestMappingTest : StringSpec({
     "update request should be mapped to context" {
         val request = MpUpdateRequest(
             requestId = "id-1",
-            createData = MpProfileDto(
+            updateData = MpProfileDto(
                 id = "id-1",
                 firstName = "Pavel",
                 lastName = "Durov",

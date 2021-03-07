@@ -11,7 +11,7 @@ data class MpUpdateRequest(
     override val onResponse: String? = null,
     override val startTime: String? = null,
     override val debug: Debug? = null,
-    val createData: MpProfileDto? = null,
+    val updateData: MpProfileDto? = null,
 ) : IMpRequest {
 
     @Serializable

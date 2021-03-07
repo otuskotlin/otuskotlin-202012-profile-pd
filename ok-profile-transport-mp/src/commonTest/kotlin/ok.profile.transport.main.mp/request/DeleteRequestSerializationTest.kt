@@ -1,39 +1,20 @@
 package ok.profile.transport.main.mp.request
 
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.KSerializer
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class DeleteRequestSerializationTest {
+internal class DeleteRequestSerializationTest : RequestSerializationTest<MpDeleteRequest>() {
 
-    private val request = MpDeleteRequest(
+    override val serializer: KSerializer<MpDeleteRequest> = MpDeleteRequest.serializer()
+    override val request = MpDeleteRequest(
         requestId = "id-1",
         profileId = "profile-1"
     )
 
     @Test
     fun serializationTest() {
-        val json = Json {
-            prettyPrint = true
-        }
-        val requestAsString = json.encodeToString(MpDeleteRequest.serializer(), request)
-
         assertTrue("id-1" in requestAsString)
         assertTrue("profile-1" in requestAsString)
-    }
-
-    @Test
-    fun deserializationTest() {
-        val json = """
-            {
-                "requestId": "id-1",
-                "profileId": "profile-1"
-            }
-        """.trimIndent()
-
-        val reqEntity = Json.decodeFromString(MpDeleteRequest.serializer(), json)
-
-        assertEquals(reqEntity, request)
     }
 }

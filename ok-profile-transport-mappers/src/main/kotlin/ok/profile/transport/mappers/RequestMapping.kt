@@ -11,8 +11,8 @@ fun BeContext.setRequest(request: IMpRequest) {
         is MpCreateRequest -> request.createData?.let(this::mapProfile)
         is MpReadRequest -> request.profileId?.let(this::mapId)
         is MpUpdateRequest -> {
-            request.createData?.let(this::mapProfile)
-            request.createData?.id?.let(this::mapId)
+            request.updateData?.let(this::mapProfile)
+            request.updateData?.id?.let(this::mapId)
         }
         is MpDeleteRequest -> request.profileId?.let(this::mapId)
     }
