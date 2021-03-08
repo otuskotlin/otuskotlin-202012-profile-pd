@@ -14,6 +14,14 @@ dependencies {
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-host-common:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("io.ktor:ktor-serialization:$ktorVersion")
+    testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
+
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
+    implementation(project(":ok-profile-common-be"))
+    implementation(project(":ok-profile-transport-mp"))
+    implementation(project(":ok-profile-transport-mappers"))
+
     testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
 }
