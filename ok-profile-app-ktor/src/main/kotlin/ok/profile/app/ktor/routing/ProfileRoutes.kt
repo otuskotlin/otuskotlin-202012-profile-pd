@@ -10,9 +10,11 @@ import ok.profile.common.be.context.BeContext
 import ok.profile.transport.main.mp.request.*
 import ok.profile.transport.main.mp.response.*
 import ok.profile.transport.mappers.*
+import org.kodein.di.instance
+import org.kodein.di.ktor.di
 
 fun Route.profile() {
-    val profileService = ProfileService()
+    val profileService: ProfileService by di().instance()
 
     route("/profile") {
         post("/get") {
