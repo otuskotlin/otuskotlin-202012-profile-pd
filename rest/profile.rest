@@ -1,4 +1,52 @@
 POST http://localhost:8080/profile/get
 Content-Type: application/json
 
-{"profileId": "fake-id"}
+{"profileId": "test-id"}
+
+###
+POST http://localhost:8080/profile/create
+Content-Type: application/json
+
+{
+  "requestId": "id-1",
+  "startTime": "2021-02-13T12:00:00",
+  "createData": {
+    "firstName": "Denis",
+    "lastName": "Pavlov",
+    "email": "denis@gmail.com"
+  }
+}
+
+###
+POST http://localhost:8080/profile/update
+Content-Type: application/json
+
+{
+  "requestId": "id-1",
+  "updateData": {
+    "id": "profile-1",
+    "firstName": "Pavel",
+    "lastName": "Durov",
+    "email": "pavel@telegram.com"
+  }
+}
+
+###
+POST http://localhost:8080/profile/delete
+Content-Type: application/json
+
+{
+  "requestId": "id-1",
+  "profileId": "profile-1"
+}
+
+###
+POST http://localhost:8080/profile/filter
+Content-Type: application/json
+
+{
+  "requestId": "id-1",
+  "filterData": {
+    "text": "Durov"
+  }
+}

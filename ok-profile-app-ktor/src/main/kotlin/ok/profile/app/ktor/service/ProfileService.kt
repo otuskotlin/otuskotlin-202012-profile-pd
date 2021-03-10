@@ -21,16 +21,8 @@ class ProfileService {
     }
 
     fun create(context: BeContext) = context.apply {
-        val created = Profile(
-            ProfileId("test-id-1"),
-            firstName = "Elon",
-            lastName = "Musk",
-            nickName = "elon",
-            email = "elon@tesla.com",
-            avatar = "fake-avatar",
-        )
-        mockProfiles += created
-        responseProfile = created
+        mockProfiles += requestProfile
+        responseProfile = requestProfile
     }
 
     fun update(context: BeContext) {
