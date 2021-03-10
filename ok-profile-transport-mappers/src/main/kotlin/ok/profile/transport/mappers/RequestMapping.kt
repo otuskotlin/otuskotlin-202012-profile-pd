@@ -15,6 +15,9 @@ fun BeContext.setRequest(request: IMpRequest) {
             request.updateData?.id?.let(this::mapId)
         }
         is MpDeleteRequest -> request.profileId?.let(this::mapId)
+        is MpListRequest -> request.filterData?.let {
+            filterText = it.text ?: ""
+        }
     }
 }
 

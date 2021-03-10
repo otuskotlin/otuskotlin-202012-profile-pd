@@ -1,21 +1,20 @@
 package ok.profile.app.ktor
 
-import io.ktor.routing.*
-import io.ktor.http.content.*
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
-import io.ktor.response.*
+import io.ktor.http.content.*
 import io.ktor.request.*
+import io.ktor.response.*
+import io.ktor.routing.*
 import io.ktor.serialization.*
+import io.ktor.util.pipeline.*
 import kotlinx.serialization.json.Json
 import ok.profile.app.ktor.service.ProfileService
 import ok.profile.common.be.context.BeContext
-import ok.profile.transport.main.mp.request.MpReadRequest
-import ok.profile.transport.main.mp.response.MpCreateResponse
-import ok.profile.transport.main.mp.response.ResponseStatusDto
-import ok.profile.transport.mappers.setRequest
-import ok.profile.transport.mappers.createReadResponse
+import ok.profile.transport.main.mp.request.*
+import ok.profile.transport.main.mp.response.*
+import ok.profile.transport.mappers.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -28,74 +27,73 @@ fun Application.module(testing: Boolean = false) {
         }
 
         route("/profile") {
+
             post("/get") {
-                try {
+                respond(badResponse = MpReadResponse(status = ResponseStatusDto.BAD_REQUEST)) {
                     val request = call.receive<MpReadRequest>()
                     val context = BeContext().apply {
                         setRequest(request)
                     }
                     profileService.get(context)
-                    val response = context.createReadResponse().copy(
+                    context.buildReadResponse().copy(
                         onRequest = request.requestId,
                         responseId = "resp-id",
                     )
-                    call.respond(response)
-                } catch (e: Throwable) {
-                    call.respond(MpCreateResponse(status = ResponseStatusDto.BAD_REQUEST))
                 }
             }
-        }
 
-        /*
             post("/create") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestDemandCreate
-                    call.respond(demandService.create(query))
-                } catch(e: Throwable) {
-                    call.respond(
-                        MpResponseDemandCreate(
-                            status = ResponseStatusDto.BAD_REQUEST
-                        )
+                respond(badResponse = MpCreateResponse(status = ResponseStatusDto.BAD_REQUEST)) {
+                    val request = call.receive<MpCreateRequest>()
+                    val context = BeContext().apply {
+                        setRequest(request)
+                    }
+                    profileService.create(context)
+                    context.buildCreateResponse().copy(
+                        onRequest = request.requestId,
+                        responseId = "resp-id"
                     )
                 }
             }
+
             post("/update") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestDemandUpdate
-                    call.respond(demandService.update(query))
-                } catch(e: Throwable) {
-                    call.respond(
-                        MpResponseDemandUpdate(
-                            status = ResponseStatusDto.BAD_REQUEST
-                        )
+                respond(badResponse = MpUpdateResponse(status = ResponseStatusDto.BAD_REQUEST)) {
+                    val request = call.receive<MpUpdateRequest>()
+                    val context = BeContext().apply {
+                        setRequest(request)
+                    }
+                    profileService.update(context)
+                    context.buildUpdateResponse().copy(
+                        onRequest = request.requestId,
+                        responseId = "resp-id"
                     )
                 }
             }
+
             post("/delete") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestDemandDelete
-                    call.respond(demandService.delete(query))
-                } catch(e: Throwable) {
-                    call.respond(
-                        MpResponseDemandDelete(
-                            status = ResponseStatusDto.BAD_REQUEST
-                        )
+                respond(badResponse = MpDeleteResponse(status = ResponseStatusDto.BAD_REQUEST, deleted = false)) {
+                    val request = call.receive<MpDeleteRequest>()
+                    val context = BeContext().apply {
+                        setRequest(request)
+                    }
+                    profileService.delete(context)
+                    context.buildDeleteResponse().copy(
+                        onRequest = request.requestId,
+                        responseId = "resp-id"
                     )
                 }
             }
             post("/filter") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestDemandList
-                    call.respond(demandService.filter(query))
-                } catch(e: Throwable) {
-                    call.respond(
-                        MpResponseDemandList(
-                            status = ResponseStatusDto.BAD_REQUEST
-                        )
-                    )
+                respond(badResponse = MpListResponse(status = ResponseStatusDto.BAD_REQUEST)) {
+                    val request = call.receive<MpListRequest>()
+                    val context = BeContext().apply {
+                        setRequest(request)
+                    }
+                    profileService.filter(context)
+                    context.buildListResponse()
                 }
             }
-         */
+        }
 
         // Static feature. Try to access `/static/ktor_logo.svg`
         static("/static") {
@@ -110,4 +108,16 @@ fun Application.module(testing: Boolean = false) {
         )
     }
 
+}
+
+suspend inline fun <reified T : IMpResponse> PipelineContext<Unit, ApplicationCall>.respond(
+    badResponse: T,
+    createResponse: () -> T,
+) {
+    try {
+        val response = createResponse()
+        call.respond(response)
+    } catch (e: Throwable) {
+        call.respond(badResponse)
+    }
 }

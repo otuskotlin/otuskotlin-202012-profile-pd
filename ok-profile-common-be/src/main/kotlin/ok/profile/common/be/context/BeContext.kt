@@ -9,4 +9,7 @@ data class BeContext(
 
     var responseProfileId: ProfileId = ProfileId.NONE,
     var responseProfile: Profile = Profile.NONE,
+
+    var filterText: String = "",
+    var resultList: MutableList<Profile> = mutableListOf()
 )
