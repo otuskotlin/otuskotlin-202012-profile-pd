@@ -31,7 +31,8 @@ dependencies {
     implementation(project(":ok-profile-transport-mappers"))
 }
 
-val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "11"
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

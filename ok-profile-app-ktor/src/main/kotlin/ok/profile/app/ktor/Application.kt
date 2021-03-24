@@ -19,8 +19,10 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module(testing: Boolean = false) {
 
-    di {
-        bind<ProfileService>() with singleton { InMemoryProfileService() }
+    if (!testing) {
+        di {
+            bind<ProfileService>() with singleton { InMemoryProfileService() }
+        }
     }
 
     routing {

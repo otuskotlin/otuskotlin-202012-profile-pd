@@ -27,6 +27,7 @@ fun Route.profile() {
                 context.buildReadResponse().copy(
                     onRequest = request.requestId,
                     responseId = "resp-id",
+                    status = ResponseStatusDto.SUCCESS,
                 )
             }
         }
@@ -40,7 +41,8 @@ fun Route.profile() {
                 profileService.create(context)
                 context.buildCreateResponse().copy(
                     onRequest = request.requestId,
-                    responseId = "resp-id"
+                    responseId = "resp-id",
+                    status = ResponseStatusDto.SUCCESS,
                 )
             }
         }
@@ -54,7 +56,8 @@ fun Route.profile() {
                 profileService.update(context)
                 context.buildUpdateResponse().copy(
                     onRequest = request.requestId,
-                    responseId = "resp-id"
+                    responseId = "resp-id",
+                    status = ResponseStatusDto.SUCCESS,
                 )
             }
         }
@@ -68,7 +71,8 @@ fun Route.profile() {
                 profileService.delete(context)
                 context.buildDeleteResponse().copy(
                     onRequest = request.requestId,
-                    responseId = "resp-id"
+                    responseId = "resp-id",
+                    status = ResponseStatusDto.SUCCESS,
                 )
             }
         }
@@ -79,7 +83,11 @@ fun Route.profile() {
                     setRequest(request)
                 }
                 profileService.filter(context)
-                context.buildListResponse()
+                context.buildListResponse().copy(
+                    onRequest = request.requestId,
+                    responseId = "resp-id",
+                    status = ResponseStatusDto.SUCCESS,
+                )
             }
         }
     }
