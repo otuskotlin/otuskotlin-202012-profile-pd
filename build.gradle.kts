@@ -16,5 +16,6 @@ subprojects {
         mavenCentral()
         maven { url = uri("https://dl.bintray.com/kotlin/kotlin-js-wrappers") }
         maven { url = uri("https://repo.spring.io/milestone") }
+        maven { url = uri("https://kotlin.bintray.com/ktor") }
     }
 }
