@@ -1,25 +1,25 @@
 package ok.profile.transport.mappers
 
-import ok.profile.common.be.context.BeContext
+import ok.profile.common.be.context.Context
 import ok.profile.transport.main.mp.response.*
 
-fun BeContext.buildReadResponse(): MpReadResponse = MpReadResponse(
+fun Context.buildReadResponse(): MpReadResponse = MpReadResponse(
     profileDto = responseProfile.toTransport(),
 )
 
-fun BeContext.buildCreateResponse(): MpCreateResponse = MpCreateResponse(
+fun Context.buildCreateResponse(): MpCreateResponse = MpCreateResponse(
     profileDto = responseProfile.toTransport()
 )
 
-fun BeContext.buildUpdateResponse(): MpUpdateResponse = MpUpdateResponse(
+fun Context.buildUpdateResponse(): MpUpdateResponse = MpUpdateResponse(
     profileDto = responseProfile.toTransport()
 )
 
-fun BeContext.buildDeleteResponse(): MpDeleteResponse = MpDeleteResponse(
+fun Context.buildDeleteResponse(): MpDeleteResponse = MpDeleteResponse(
     deleted = true,
     profileDto = responseProfile.toTransport()
 )
 
-fun BeContext.buildListResponse(): MpListResponse = MpListResponse(
+fun Context.buildListResponse(): MpListResponse = MpListResponse(
     profiles = this.resultList.map { it.toTransport() }
 )

@@ -6,7 +6,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.util.pipeline.*
 import ok.profile.app.ktor.service.ProfileService
-import ok.profile.common.be.context.BeContext
+import ok.profile.common.be.context.Context
 import ok.profile.transport.main.mp.request.*
 import ok.profile.transport.main.mp.response.*
 import ok.profile.transport.mappers.*
@@ -20,7 +20,7 @@ fun Route.profile() {
         post("/get") {
             respond(badResponse = MpReadResponse(status = ResponseStatusDto.BAD_REQUEST)) {
                 val request = call.receive<MpReadRequest>()
-                val context = BeContext().apply {
+                val context = Context().apply {
                     setRequest(request)
                 }
                 profileService.get(context)
@@ -35,7 +35,7 @@ fun Route.profile() {
         post("/create") {
             respond(badResponse = MpCreateResponse(status = ResponseStatusDto.BAD_REQUEST)) {
                 val request = call.receive<MpCreateRequest>()
-                val context = BeContext().apply {
+                val context = Context().apply {
                     setRequest(request)
                 }
                 profileService.create(context)
@@ -50,7 +50,7 @@ fun Route.profile() {
         post("/update") {
             respond(badResponse = MpUpdateResponse(status = ResponseStatusDto.BAD_REQUEST)) {
                 val request = call.receive<MpUpdateRequest>()
-                val context = BeContext().apply {
+                val context = Context().apply {
                     setRequest(request)
                 }
                 profileService.update(context)
@@ -65,7 +65,7 @@ fun Route.profile() {
         post("/delete") {
             respond(badResponse = MpDeleteResponse(status = ResponseStatusDto.BAD_REQUEST, deleted = false)) {
                 val request = call.receive<MpDeleteRequest>()
-                val context = BeContext().apply {
+                val context = Context().apply {
                     setRequest(request)
                 }
                 profileService.delete(context)
@@ -79,7 +79,7 @@ fun Route.profile() {
         post("/filter") {
             respond(badResponse = MpListResponse(status = ResponseStatusDto.BAD_REQUEST)) {
                 val request = call.receive<MpListRequest>()
-                val context = BeContext().apply {
+                val context = Context().apply {
                     setRequest(request)
                 }
                 profileService.filter(context)

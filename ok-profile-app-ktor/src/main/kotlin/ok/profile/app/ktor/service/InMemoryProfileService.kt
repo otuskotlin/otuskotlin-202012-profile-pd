@@ -1,6 +1,6 @@
 package ok.profile.app.ktor.service
 
-import ok.profile.common.be.context.BeContext
+import ok.profile.common.be.context.Context
 import ok.profile.common.be.models.Profile
 import ok.profile.common.be.models.ProfileId
 
@@ -16,16 +16,16 @@ class InMemoryProfileService : ProfileService {
         ),
     )
 
-    override fun get(context: BeContext) = context.run {
+    override fun get(context: Context) = context.run {
         responseProfile = mockProfiles.find { it.id == requestProfileId } ?: Profile.NONE
     }
 
-    override fun create(context: BeContext) = context.run {
+    override fun create(context: Context) = context.run {
         mockProfiles += requestProfile
         responseProfile = requestProfile
     }
 
-    override fun update(context: BeContext) {
+    override fun update(context: Context) {
         val current = mockProfiles.find { it.id == context.requestProfileId }
         if (current == null) {
             context.responseProfileId = ProfileId.NONE
@@ -40,14 +40,14 @@ class InMemoryProfileService : ProfileService {
         context.responseProfile = updated
     }
 
-    override fun delete(context: BeContext) {
+    override fun delete(context: Context) {
         val isRemoved = mockProfiles.removeIf {
             it.id == context.requestProfileId
         }
         context.responseProfileId = if (isRemoved) context.requestProfileId else ProfileId.NONE
     }
 
-    override fun filter(context: BeContext) {
+    override fun filter(context: Context) {
         context.resultList = mockProfiles.filter { it.toString().contains(context.filterText) }.toMutableList()
     }
 

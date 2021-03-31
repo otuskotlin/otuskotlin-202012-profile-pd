@@ -3,7 +3,7 @@ package ok.profile.transport.mappers
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import ok.profile.common.be.context.BeContext
+import ok.profile.common.be.context.Context
 import ok.profile.common.be.models.ProfileId
 import ok.profile.transport.main.mp.dto.MpProfileDto
 import ok.profile.transport.main.mp.request.*
@@ -22,7 +22,7 @@ internal class RequestMappingTest : StringSpec({
             ),
         )
 
-        val context = BeContext()
+        val context = Context()
         context.setRequest(request)
 
         context.requestProfileId shouldBe ProfileId.NONE
@@ -41,7 +41,7 @@ internal class RequestMappingTest : StringSpec({
             profileId = "profile-1",
         )
 
-        val context = BeContext()
+        val context = Context()
         context.setRequest(request)
 
         context.requestProfileId shouldBe ProfileId("profile-1")
@@ -60,7 +60,7 @@ internal class RequestMappingTest : StringSpec({
             ),
         )
 
-        val context = BeContext()
+        val context = Context()
         context.setRequest(request)
 
         context.requestProfileId shouldBe ProfileId("id-1")
@@ -80,7 +80,7 @@ internal class RequestMappingTest : StringSpec({
             profileId = "profile-1",
         )
 
-        val context = BeContext()
+        val context = Context()
         context.setRequest(request)
 
         context.requestProfileId shouldBe ProfileId("profile-1")

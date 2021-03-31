@@ -1,12 +1,12 @@
 package ok.profile.transport.mappers
 
-import ok.profile.common.be.context.BeContext
+import ok.profile.common.be.context.Context
 import ok.profile.common.be.models.Profile
 import ok.profile.common.be.models.ProfileId
 import ok.profile.transport.main.mp.dto.MpProfileDto
 import ok.profile.transport.main.mp.request.*
 
-fun BeContext.setRequest(request: IMpRequest) {
+fun Context.setRequest(request: IMpRequest) {
     when (request) {
         is MpCreateRequest -> request.createData?.let(this::mapProfile)
         is MpReadRequest -> request.profileId?.let(this::mapId)
@@ -21,11 +21,11 @@ fun BeContext.setRequest(request: IMpRequest) {
     }
 }
 
-private fun BeContext.mapId(profileId: String) {
+private fun Context.mapId(profileId: String) {
     requestProfileId = ProfileId(profileId)
 }
 
-private fun BeContext.mapProfile(profileDto: MpProfileDto) {
+private fun Context.mapProfile(profileDto: MpProfileDto) {
     requestProfile = Profile(
         id = profileDto.id?.let { ProfileId(it) } ?: ProfileId.NONE,
         firstName = profileDto.firstName.orEmpty(),
