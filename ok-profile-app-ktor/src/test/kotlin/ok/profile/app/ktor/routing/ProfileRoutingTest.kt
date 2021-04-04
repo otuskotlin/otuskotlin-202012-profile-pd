@@ -3,6 +3,7 @@ package ok.profile.app.ktor.routing
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.serialization.json.Json
+import ok.profile.app.ktor.module
 import ok.profile.transport.main.mp.request.MpReadRequest
 import ok.profile.transport.main.mp.response.MpReadResponse
 import ok.profile.transport.main.mp.response.ResponseStatusDto
@@ -14,11 +15,12 @@ internal class ProfileRoutingTest {
 
     @Test
     fun get() {
-        withTestApplication({ testInit() }) {
-            handleRequest(HttpMethod.Post, "/profile/get") {
+        withTestApplication({ module(testing = true)}) {
+            handleRequest(HttpMethod.Post, "/profile/read") {
                 val body = MpReadRequest(
                     requestId = "req-id",
-                    profileId = "test-id"
+                    profileId = "test-id",
+                    debug = MpReadRequest.Debug(stubCase = MpReadRequest.StubCase.SUCCESS),
                 )
                 val bodyString = Json.encodeToString(MpReadRequest.serializer(), body)
                 setBody(bodyString)

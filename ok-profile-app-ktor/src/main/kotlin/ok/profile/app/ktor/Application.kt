@@ -9,27 +9,19 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import kotlinx.serialization.json.Json
 import ok.profile.app.ktor.routing.profile
-import ok.profile.app.ktor.service.InMemoryProfileService
-import ok.profile.app.ktor.service.ProfileService
-import org.kodein.di.bind
-import org.kodein.di.ktor.di
-import org.kodein.di.singleton
+import ok.profile.business.logic.ProfileService
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module(testing: Boolean = false) {
 
-    if (!testing) {
-        di {
-            bind<ProfileService>() with singleton { InMemoryProfileService() }
-        }
-    }
+    val profileService = ProfileService()
 
     routing {
         get("/") {
             call.respondText("Hello World!")
         }
-        profile()
+        profile(profileService)
         // Static feature. Try to access `/static/ktor_logo.svg`
         static("/static") {
             resources("static")
