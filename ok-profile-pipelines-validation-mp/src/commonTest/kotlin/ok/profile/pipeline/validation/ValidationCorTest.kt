@@ -24,9 +24,6 @@ internal class ValidationCorTest {
                 validate<String?> { validator(ValidatorStringNonEmpty()); on { x } }
                 validate<String?> { validator(ValidatorStringNonEmpty()); on { y } }
 
-//                validate({ x }) {
-//                    validator(ValidatorStringNonEmpty())
-//                }
             }
         }
 
