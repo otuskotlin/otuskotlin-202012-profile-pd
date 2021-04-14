@@ -16,6 +16,13 @@ data class MpUpdateRequest(
 
     @Serializable
     data class Debug(
-        override val mode: MpWorkModeDto? = MpWorkModeDto.TEST
+        override val mode: MpWorkModeDto? = null,
+        val stubCase: StubCase? = null
     ) : IMpDebug
+
+    @Serializable
+    enum class StubCase {
+        NONE,
+        SUCCESS
+    }
 }
