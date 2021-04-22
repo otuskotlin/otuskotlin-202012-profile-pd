@@ -24,6 +24,8 @@ docker {
 dependencies {
     val ktorVersion: String by project
     val logbackVersion: String by project
+    val ktorKafkaVersion: String by project
+    val kafkaVersion: String by project
 
     implementation(kotlin("stdlib"))
 
@@ -36,6 +38,10 @@ dependencies {
 
     // logging
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
+    // kafka
+    implementation("com.github.Datana-company:ktor-kafka:$ktorKafkaVersion")
+    implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
 
     implementation(project(":ok-profile-common-be"))
     implementation(project(":ok-profile-transport-mp"))
