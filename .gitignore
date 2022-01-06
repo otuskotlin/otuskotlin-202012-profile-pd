@@ -1,3 +1,4 @@
 .gradle
 .idea
 /build/
+/ok-profile-pipelines-validation-mp/build/
